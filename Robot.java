@@ -20,6 +20,9 @@ public class Robot {
     this.dir = dir;
   }
 
+  /**
+   * This will print the position and direction of the robot.
+   */
   public void report() {
     System.out.println(String.format("x: %d, y: %d, dir: %s", this.x, this.y, this.dir));
   }
@@ -32,9 +35,27 @@ public class Robot {
     rotate(num -> num - 1 + Direction.ROTATION.size());
   }
 
+  public void move() {
+    switch (this.dir) {
+      case NORTH:
+        this.y++;
+        break;
+      case SOUTH:
+        this.y--;
+        break;
+      case EAST:
+        this.x++;
+        break;
+      case WEST:
+        this.x--;
+        break;
+    }
+  }
+
   private void rotate(Function<Integer, Integer> rotationInd) {
     int current = Direction.ROTATION.indexOf(this.dir);
     int next = rotationInd.apply(current) % Direction.ROTATION.size();
     this.dir = Direction.ROTATION.get(next);
   }
+
 }

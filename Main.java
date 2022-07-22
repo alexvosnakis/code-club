@@ -3,6 +3,7 @@ public class Main {
     Robot robot = new Robot(1, 2, Robot.Direction.NORTH);
     robot.report();
     robot.left();
+    robot.move();
     robot.report();
   }
 }
