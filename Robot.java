@@ -7,6 +7,8 @@ public class Robot {
   private int y;
   private Direction dir;
 
+  private final Table table;
+
   public static enum Direction {
     NORTH, SOUTH, EAST, WEST;
 
@@ -14,10 +16,11 @@ public class Robot {
         NORTH, WEST, SOUTH, EAST);
   }
 
-  public Robot(int x, int y, Direction dir) {
+  public Robot(int x, int y, Direction dir, Table table) {
     this.x = x;
     this.y = y;
     this.dir = dir;
+    this.table = table;
   }
 
   /**
