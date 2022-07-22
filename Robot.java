@@ -39,19 +39,27 @@ public class Robot {
   }
 
   public void move() {
+    int nextX = this.x;
+    int nextY = this.y;
+
     switch (this.dir) {
       case NORTH:
-        this.y++;
+        nextY++;
         break;
       case SOUTH:
-        this.y--;
+        nextY--;
         break;
       case EAST:
-        this.x++;
+        nextX++;
         break;
       case WEST:
-        this.x--;
+        nextX--;
         break;
+    }
+
+    if (this.table.isOnTable(nextX, nextY)) {
+      this.x = nextX;
+      this.y = nextY;
     }
   }
 

@@ -5,6 +5,7 @@ public class Main {
     robot.report();
     robot.left();
     robot.move();
+    robot.move();
     robot.report();
   }
 
