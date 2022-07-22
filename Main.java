@@ -1,8 +1,8 @@
 public class Main {
   public static void main(String[] args) {
-    Robot robot = new Robot(1,2, Robot.Direction.NORTH);
+    Robot robot = new Robot(1, 2, Robot.Direction.NORTH);
     robot.report();
-    robot.right();
+    robot.left();
     robot.report();
   }
 }

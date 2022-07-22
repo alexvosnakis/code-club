@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class Robot {
   private int x;
@@ -10,8 +11,7 @@ public class Robot {
     NORTH, SOUTH, EAST, WEST;
 
     static final List<Direction> ROTATION = Arrays.asList(
-      NORTH, WEST, SOUTH, EAST
-    );
+        NORTH, WEST, SOUTH, EAST);
   }
 
   public Robot(int x, int y, Direction dir) {
@@ -25,14 +25,16 @@ public class Robot {
   }
 
   public void left() {
-    int current = Direction.ROTATION.indexOf(this.dir);
-    int next = (current + 1) % Direction.ROTATION.size();
-    this.dir = Direction.ROTATION.get(next);
+    rotate(num -> num + 1);
   }
 
   public void right() {
+    rotate(num -> num - 1 + Direction.ROTATION.size());
+  }
+
+  private void rotate(Function<Integer, Integer> rotationInd) {
     int current = Direction.ROTATION.indexOf(this.dir);
-    int next = (current - 1 + Direction.ROTATION.size()) % Direction.ROTATION.size();
+    int next = rotationInd.apply(current) % Direction.ROTATION.size();
     this.dir = Direction.ROTATION.get(next);
   }
 }
