@@ -7,6 +7,8 @@ public class Robot {
   private int y;
   private Direction dir;
 
+  private boolean hasBeenPlaced = false;
+
   private final Table table;
 
   public static enum Direction {
@@ -16,29 +18,45 @@ public class Robot {
         NORTH, WEST, SOUTH, EAST);
   }
 
-  public Robot(int x, int y, Direction dir, Table table) {
-    this.x = x;
-    this.y = y;
-    this.dir = dir;
+  public Robot(Table table) {
+    this.x = 0; // default
+    this.y = 0; // default
+    this.dir = Direction.NORTH; // default
     this.table = table;
   }
 
   /**
    * This will print the position and direction of the robot.
    */
-  public void report() {
+  public void report(Command.Report report) {
+    if (!hasBeenPlaced) {
+      return;
+    }
+
     System.out.println(String.format("x: %d, y: %d, dir: %s", this.x, this.y, this.dir));
   }
 
-  public void left() {
+  public void left(Command.Left left) {
+    if (!hasBeenPlaced) {
+      return;
+    }
+
     rotate(num -> num + 1);
   }
 
-  public void right() {
+  public void right(Command.Right right) {
+    if (!hasBeenPlaced) {
+      return;
+    }
+
     rotate(num -> num - 1 + Direction.ROTATION.size());
   }
 
-  public void move() {
+  public void move(Command.Move move) {
+    if (!hasBeenPlaced) {
+      return;
+    }
+
     int nextX = this.x;
     int nextY = this.y;
 
@@ -61,6 +79,14 @@ public class Robot {
       this.x = nextX;
       this.y = nextY;
     }
+  }
+
+  public void place(Command.Place place) {
+    this.hasBeenPlaced = true;
+
+    this.dir = place.dir;
+    this.x = place.x;
+    this.y = place.y;
   }
 
   private void rotate(Function<Integer, Integer> rotationInd) {

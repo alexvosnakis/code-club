@@ -1,63 +1,54 @@
 public interface Command {
 
-  public Robot execute(Robot robot);
+  public void execute(Robot robot);
 
   public static class Move implements Command {
 
     @Override
-    public Robot execute(Robot robot) {
-      robot.move();
-      return robot;
+    public void execute(Robot robot) {
+      robot.move(this);
     }
   }
 
   public static class Report implements Command {
 
     @Override
-    public Robot execute(Robot robot) {
-      robot.report();
-      return robot;
+    public void execute(Robot robot) {
+      robot.report(this);
     }
   }
 
   public static class Left implements Command {
 
     @Override
-    public Robot execute(Robot robot) {
-      robot.left();
-      return robot;
-
+    public void execute(Robot robot) {
+      robot.left(this);
     }
   }
 
   public static class Right implements Command {
 
     @Override
-    public Robot execute(Robot robot) {
-      robot.right();
-      return robot;
-
+    public void execute(Robot robot) {
+      robot.right(this);
     }
   }
 
   public static class Place implements Command {
 
-    private final int x;
-    private final int y;
-    private Robot.Direction dir;
-    private Table table;
+    public final int x;
+    public final int y;
+    public final Robot.Direction dir;
 
-    public Place(int x, int y, Robot.Direction dir, Table table) {
+    public Place(int x, int y, Robot.Direction dir) {
       this.x = x;
       this.y = y;
       this.dir = dir;
-
     }
 
     @Override
-    public Robot execute(Robot robot) {
-      Robot newRobot = new Robot(x, y, dir, table);
-      return new Robot(x, y, dir, table);
+    public void execute(Robot robot) {
+      robot.place(this);
     }
   }
 }

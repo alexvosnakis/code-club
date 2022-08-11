@@ -1,20 +1,34 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
     Table table = new Table(5, 5);
-    Robot robot = null;
+    Robot robot = new Robot(table);
 
-    Scanner scanner = new Scanner(System.in);
+    List<Command> commands = new ArrayList<>();
+    commands.add(new Command.Place(2, 2, Robot.Direction.NORTH));
+    commands.add(new Command.Move());
+    commands.add(new Command.Left());
+    commands.add(new Command.Move());
+    commands.add(new Command.Right());
+    commands.add(new Command.Report());
 
-    while (scanner.hasNextLine()) {
-      String str = scanner.nextLine();
-      System.out.println(str);
-
-      Command command = Parser.accept(str, table);
+    for (Command command : commands) {
       command.execute(robot);
     }
 
-    scanner.close();
+    // Scanner scanner = new Scanner(System.in);
+
+    // while (scanner.hasNextLine()) {
+    // String str = scanner.nextLine();
+    // System.out.println(str);
+
+    // Command command = Parser.accept(str, table);
+    // command.execute(robot);
+    // }
+
+    // scanner.close();
   }
 }
