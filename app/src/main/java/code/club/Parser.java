@@ -1,5 +1,12 @@
+package app.src.main.java.code.club;
 import java.util.Arrays;
 import java.util.List;
+
+import app.src.main.java.code.club.Command.Left;
+import app.src.main.java.code.club.Command.Move;
+import app.src.main.java.code.club.Command.Place;
+import app.src.main.java.code.club.Command.Report;
+import app.src.main.java.code.club.Command.Right;
 
 public class Parser {
   public static Command accept(String rawCommand) throws IllegalCommandException {

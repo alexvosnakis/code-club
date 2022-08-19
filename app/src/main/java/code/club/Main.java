@@ -1,3 +1,4 @@
+package code.club;
 import java.util.Scanner;
 
 public class Main {

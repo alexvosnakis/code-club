@@ -1,3 +1,4 @@
+package app.src.main.java.code.club;
 public interface Command {
 
   public void execute(Robot robot);
