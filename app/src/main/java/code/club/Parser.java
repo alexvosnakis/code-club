@@ -3,12 +3,6 @@ package code.club;
 import java.util.Arrays;
 import java.util.List;
 
-import code.club.Command.Left;
-import code.club.Command.Move;
-import code.club.Command.Place;
-import code.club.Command.Report;
-import code.club.Command.Right;
-
 public class Parser {
   public static Command accept(String rawCommand) throws IllegalCommandException {
     List<String> tokens = Arrays.asList(rawCommand.split("\\s"));

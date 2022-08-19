@@ -1,13 +1,8 @@
-package app.src.main.java.code.club;
+package code.club;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-
-import app.src.main.java.code.club.Command.Left;
-import app.src.main.java.code.club.Command.Move;
-import app.src.main.java.code.club.Command.Place;
-import app.src.main.java.code.club.Command.Report;
-import app.src.main.java.code.club.Command.Right;
 
 public class Robot {
   private int x;
