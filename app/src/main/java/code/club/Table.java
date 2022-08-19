@@ -1,4 +1,5 @@
-package app.src.main.java.code.club;
+package code.club;
+
 public class Table {
 
   private final int xAxisLength;
