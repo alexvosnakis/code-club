@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -23,8 +21,12 @@ public class Main {
 
     while (scanner.hasNextLine()) {
       String str = scanner.nextLine();
-      Command command = Parser.accept(str);
-      command.execute(robot);
+      try {
+        Command command = Parser.accept(str);
+        command.execute(robot);
+      } catch (IllegalCommandException e) {
+        System.out.println(e.getMessage());
+      }
     }
 
     scanner.close();

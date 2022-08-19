@@ -2,8 +2,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
-  public static Command accept(String rawCommand) {
-    List<String> tokens = Arrays.asList(rawCommand.split(" "));
+  public static Command accept(String rawCommand) throws IllegalCommandException {
+    List<String> tokens = Arrays.asList(rawCommand.split("\\s"));
 
     if (!tokens.isEmpty()) {
       String part1 = tokens.get(0).toUpperCase();
@@ -20,35 +20,38 @@ public class Parser {
         case "REPORT":
           return new Command.Report();
         default:
-          //todo report error
-          return null;
+          if (part1.isEmpty()) {
+            throw new IllegalCommandException("Empty command");
+          } else {
+            throw new IllegalCommandException("Unknown command: " + part1);
+          }
       }
+    } else {
+      throw new IllegalCommandException("Empty command");
     }
-
-    return null;
   }
 
-  private static Command placeCommand(List<String> tokens) {
+  private static Command placeCommand(List<String> tokens) throws IllegalCommandException {
     if(tokens.size() != 2) {
-      return null;
+      throw new IllegalCommandException("Missing data for PLACE command");
     }
 
     List<String> locationMeta = Arrays.asList(tokens.get(1).split(","));
 
     if(locationMeta.size() != 3) {
-      return null; //todo report error
+      throw new IllegalCommandException("Missing location data for PLACE command");
     }
 
     try {
       int x = Integer.valueOf(locationMeta.get(0));
       int y = Integer.valueOf(locationMeta.get(1));
 
-      Robot.Direction dir = Robot.Direction.valueOf(locationMeta.get(2));
+      Robot.Direction dir = Robot.Direction.valueOf(locationMeta.get(2).toUpperCase());
       return new Command.Place(x, y, dir);
     } catch(NumberFormatException e) {
-      return null; //todo report error
+      throw new IllegalCommandException("Bad location: " + locationMeta);
     } catch(IllegalArgumentException e) {
-      return null; //todo report error
+      throw new IllegalCommandException("Bad direction: " + locationMeta);
     }
   }
 }
