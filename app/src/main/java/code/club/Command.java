@@ -61,4 +61,12 @@ public interface Command {
       robot.rotorStart(this);
     }
   }
+
+  public static class RotorStop implements Command {
+
+    @Override
+    public void execute(Robot robot) {
+      robot.rotorStop(this);
+    }
+  }
 }

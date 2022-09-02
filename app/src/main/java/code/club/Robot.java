@@ -4,14 +4,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+import com.google.common.base.Objects;
+
 public class Robot {
   private int x;
   private int y;
   private int z;
   private Direction dir;
 
-  private boolean hasBeenPlaced = false;
-  private boolean isRotorStarted = false;
+  private boolean hasBeenPlaced;
+  private boolean rotorRunning;
 
   private final Table table;
 
@@ -23,11 +25,17 @@ public class Robot {
   }
 
   public Robot(Table table) {
-    this.x = 0; // default
-    this.y = 0; // default
-    this.z = 0; // default
-    this.dir = Direction.NORTH; // default
+    this(table, 0, 0, 0, Direction.NORTH, false, false);
+  }
+
+  Robot(Table table, int x, int y, int z, Direction dir, boolean hasBeenPlaced, boolean rotorRunning) {
     this.table = table;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.dir = dir;
+    this.hasBeenPlaced = hasBeenPlaced;
+    this.rotorRunning = rotorRunning;
   }
 
   /**
@@ -95,11 +103,21 @@ public class Robot {
   }
 
   public void rotorStart(Command.RotorStart rotorStart) {
-    if(!hasBeenPlaced) {
+    if (!hasBeenPlaced) {
       return;
     }
 
-    this.isRotorStarted = true;
+    this.rotorRunning = true;
+  }
+
+  public void rotorStop(Command.RotorStop rotorStop) {
+    this.rotorRunning = false;
+
+    // TODO this robot will be damaged if it lands on a obstacle
+    // eg. if (table.obstacleAt(this.x, this.y)) damageRobot() or something
+
+    // now land the robot!
+    this.z = 0;
   }
 
   private void rotate(Function<Integer, Integer> rotationInd) {
@@ -108,4 +126,24 @@ public class Robot {
     this.dir = Direction.ROTATION.get(next);
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null)
+      return false;
+    if (!(obj instanceof Robot))
+      return false;
+
+    Robot other = (Robot) obj;
+    return this.x == other.x
+        && this.y == other.y
+        && this.z == other.z
+        && this.hasBeenPlaced == other.hasBeenPlaced
+        && this.rotorRunning == other.rotorRunning
+        && this.dir == other.dir;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.x, this.y, this.z, this.hasBeenPlaced, this.rotorRunning, this.dir);
+  }
 }
