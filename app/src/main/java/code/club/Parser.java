@@ -21,6 +21,11 @@ public class Parser {
           return new Command.Move();
         case "REPORT":
           return new Command.Report();
+        case "ROTOR-START":
+          return new Command.RotorStart();
+        case "ROTOR-STOP":
+          return new Command.RotorStop();
+
         default:
           if (part1.isEmpty()) {
             throw new IllegalCommandException("Empty command");
