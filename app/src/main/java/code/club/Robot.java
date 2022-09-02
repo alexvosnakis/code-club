@@ -7,9 +7,11 @@ import java.util.function.Function;
 public class Robot {
   private int x;
   private int y;
+  private int z;
   private Direction dir;
 
   private boolean hasBeenPlaced = false;
+  private boolean isRotorStarted = false;
 
   private final Table table;
 
@@ -23,6 +25,7 @@ public class Robot {
   public Robot(Table table) {
     this.x = 0; // default
     this.y = 0; // default
+    this.z = 0; // default
     this.dir = Direction.NORTH; // default
     this.table = table;
   }
@@ -35,7 +38,7 @@ public class Robot {
       return;
     }
 
-    System.out.println(String.format("x: %d, y: %d, dir: %s", this.x, this.y, this.dir));
+    System.out.println(String.format("x: %d, y: %d, z: %d, dir: %s", this.x, this.y, this.z, this.dir));
   }
 
   public void left(Command.Left left) {
@@ -89,6 +92,14 @@ public class Robot {
     this.dir = place.dir;
     this.x = place.x;
     this.y = place.y;
+  }
+
+  public void rotorStart(Command.RotorStart rotorStart) {
+    if(!hasBeenPlaced) {
+      return;
+    }
+
+    this.isRotorStarted = true;
   }
 
   private void rotate(Function<Integer, Integer> rotationInd) {
